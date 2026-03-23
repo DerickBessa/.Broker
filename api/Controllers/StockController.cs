@@ -11,6 +11,8 @@ using api.Models;
 using Microsoft.EntityFrameworkCore;
 using api.Repository;
 using api.Interfaces;
+using api.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace api.Controllers
@@ -27,9 +29,15 @@ namespace api.Controllers
 			_repository = repository;
 		}
 		[HttpGet]
-		public async Task<IActionResult> GetAll()
-		{
-			var stock = await _repository.GetAllAsync();
+		[Authorize]
+		public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
+		{	
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			var stock = await _repository.GetAllAsync(query);
 			var stockDto = stock.Select(s => s.ToStockDto()).ToList();
 
 			return Ok(stockDto); //200 + todos os stocks
