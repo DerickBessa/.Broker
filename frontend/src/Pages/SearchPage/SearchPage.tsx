@@ -73,9 +73,9 @@ const SearchPage = (props: Props) => {
     //setServerError(result.data);
     if (typeof result === "string") {
       setServerError(result);
-    } else if (Array.isArray(result.data)) {
-      setSearchResult(result.data);
-    }
+    } else if (result.data?.result) {
+	setSearchResult(result.data.result);
+	}
   };
   return (
     <>

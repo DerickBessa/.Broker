@@ -65,7 +65,7 @@ const CashflowStatement = (props: Props) => {
   return cashFlowData ? (
     <Table config={config} data={cashFlowData}></Table>
   ) : (
-    <Spinner />
+    null
   );
 };
 

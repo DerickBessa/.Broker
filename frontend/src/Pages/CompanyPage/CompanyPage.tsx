@@ -7,7 +7,6 @@ import CompanyDashboard from "../../Components/CompanyDashboard/CompanyDashboard
 import Tile from "../../Components/Tile/Tile";
 import Spinner from "../../Components/Spinners/Spinner";
 import CompFinder from "../../Components/CompFinder/CompFinder";
-import TenKFinder from "../../Components/TenKFinder/TenKFinder";
 
 interface Props {}
 
@@ -19,7 +18,7 @@ const CompanyPage = (props: Props) => {
   useEffect(() => {
     const getProfileInit = async () => {
       const result = await getCompanyProfile(ticker!);
-      setCompany(result?.data[0]);
+      setCompany(result?.data);
     };
     getProfileInit();
   }, []);
@@ -30,15 +29,16 @@ const CompanyPage = (props: Props) => {
         <div className="w-full relative flex ct-docs-disable-sidebar-content overflow-x-hidden">
           <Sidebar />
           <CompanyDashboard ticker={ticker!}>
-            <Tile title="Company Name" subTitle={company.companyName} />
-            <Tile title="Price" subTitle={"$" + company.price.toString()} />
-            <Tile title="DCF" subTitle={"$" + company.dcf.toString()} />
-            <Tile title="Sector" subTitle={company.sector} />
-            <CompFinder ticker={company.symbol} />
-            <TenKFinder ticker={company.symbol} />
+            <Tile title="Company Name" subTitle={company.name} />
+			<Tile title="Market Cap" subTitle={"$" + company.marketCapitalization.toString()} />
+			<Tile title="Industry" subTitle={company.finnhubIndustry} />
+			<Tile title="Exchange" subTitle={company.exchange} />
+			<Tile title="IPO Date" subTitle={company.ipo} />
+			<Tile title="Website" subTitle={company.weburl} />
+			<CompFinder ticker={company.ticker} />
             <p className="bg-white shadow rounded text-medium font-medium text-gray-900 p-3 mt-1 m-4">
-              {company.description}
-            </p>
+			{company.name} — {company.finnhubIndustry} | {company.exchange}
+			</p>
           </CompanyDashboard>
         </div>
       ) : (

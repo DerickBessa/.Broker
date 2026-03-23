@@ -99,7 +99,7 @@ const CompanyProfile = (props: Props) => {
           <StockComment stockSymbol={ticker} />
         </>
       ) : (
-        <Spinner />
+        null
       )}
     </>
   );

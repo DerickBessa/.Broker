@@ -8,25 +8,28 @@ type Props = {
 };
 
 const CompFinder = ({ ticker }: Props) => {
-  const [companyData, setCompanyData] = useState<CompanyCompData>();
+  const [companyData, setCompanyData] = useState<string[]>([]);
   useEffect(() => {
     const getComps = async () => {
-      const value = await getCompData(ticker);
-      setCompanyData(value?.data[0]);
-    };
+	const value = await getCompData(ticker);
+	if (value?.data) {
+		setCompanyData(value.data);
+	}
+	};
     getComps();
-  }, [ticker]);
-  return (
-    <div className="inline-flex rounded-md shadow-sm m-4" role="group">
-      {companyData ? (
-        companyData?.peersList.map((ticker) => {
-          return <CompFinderItem ticker={ticker} />;
-        })
-      ) : (
-        <Spinner />
-      )}
-    </div>
-  );
+}, [ticker]);
+
+	return (
+		<div className="inline-flex rounded-md shadow-sm m-4" role="group">
+		{companyData.length > 0 ? (
+		companyData.map((ticker) => {
+			return <CompFinderItem key={ticker} ticker={ticker} />;
+		})
+		) : (
+		<p className="text-sm text-slate-400 m-4">No peers found</p>
+		)}
+		</div>
+	);
 };
 
 export default CompFinder;

@@ -6,7 +6,10 @@ const api = "http://localhost:5161/api/portfolio/";
 
 export const portfolioAddAPI = async (symbol: string) => {
   try {
-    const data = await axios.post<PortfolioPost>(api + `?symbol=${symbol}`);
+    const token = localStorage.getItem("token");
+    const data = await axios.post<PortfolioPost>(api + `?symbol=${symbol}`, {}, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
     return data;
   } catch (error) {
     handleError(error);
@@ -15,7 +18,10 @@ export const portfolioAddAPI = async (symbol: string) => {
 
 export const portfolioDeleteAPI = async (symbol: string) => {
   try {
-    const data = await axios.delete<PortfolioPost>(api + `?symbol=${symbol}`);
+    const token = localStorage.getItem("token");
+    const data = await axios.delete<PortfolioPost>(api + `?symbol=${symbol}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
     return data;
   } catch (error) {
     handleError(error);
@@ -24,7 +30,10 @@ export const portfolioDeleteAPI = async (symbol: string) => {
 
 export const portfolioGetAPI = async () => {
   try {
-    const data = await axios.get<PortfolioGet[]>(api);
+    const token = localStorage.getItem("token");
+    const data = await axios.get<PortfolioGet[]>(api, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
     return data;
   } catch (error) {
     handleError(error);

@@ -17,20 +17,24 @@ const Card: React.FC<Props> = ({
 }: Props): JSX.Element => {
   return (
     <div
-      className="flex flex-col items-center justify-between w-full p-6 bg-slate-100 rounded-lg md:flex-row"
+      className="flex flex-col items-center justify-between w-full p-6 bg-white border border-slate-200 rounded-xl shadow-sm md:flex-row hover:shadow-md transition-shadow"
       key={id}
       id={id}
     >
-      <Link
-        to={`/company/${searchResult.symbol}/company-profile`}
-        className="font-bold text-center text-veryDarkViolet md:text-left"
-      >
-        {searchResult.name} ({searchResult.symbol})
-      </Link>
-      <p className="text-veryDarkBlue">{searchResult.currency}</p>
-      <p className="font-bold text-veryDarkBlue">
-        {searchResult.exchangeShortName} - {searchResult.stockExchange}
-      </p>
+      <div className="flex flex-col gap-1 md:flex-row md:items-center md:gap-4">
+        <Link
+          to={`/company/${searchResult.symbol}/company-profile`}
+          className="font-bold text-lg text-blue-700 hover:underline"
+        >
+          {searchResult.description}
+        </Link>
+        <span className="text-sm font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">
+          {searchResult.symbol}
+        </span>
+        <span className="text-sm text-slate-400">
+          {searchResult.type}
+        </span>
+      </div>
       <AddPortfolio
         onPortfolioCreate={onPortfolioCreate}
         symbol={searchResult.symbol}
@@ -38,5 +42,4 @@ const Card: React.FC<Props> = ({
     </div>
   );
 };
-
 export default Card;
